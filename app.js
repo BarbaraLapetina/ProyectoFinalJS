@@ -5,16 +5,6 @@ const template = document.getElementById("template").content;
 const fragment = document.createDocumentFragment();
 
 let tasks = {
-    123456778: {
-        id: 123456778,
-        text: "Tarea #1",
-        state: true,
-    },
-    123456779: {
-        id: 123456779,
-        text: "Tarea #2",
-        state: false,
-    },
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,13 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 taskList.addEventListener("click", (event) => {
-    //btnAction(event);
+    btnAction(event);
 });
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    //console.log(event.target[0].value);
-
     setTasks(event);
 });
 
@@ -50,7 +38,12 @@ const setTasks = (e) => {
     };
 
     tasks[task.id] = task;
-    console.log(tasks);
+    
+    form.reset();
+
+    input.focus();
+
+    printTasks();
 
 };
 
@@ -69,11 +62,15 @@ const printTasks = () => {
         const clone = template.cloneNode(true);
 
         clone.querySelector("p").textContent = task.text;
+        clone.querySelector(".task_undo_icon").dataset.id = task.id;
+        clone.querySelector(".task_check_icon").dataset.id = task.id;
+        clone.querySelector(".task_trush_icon").dataset.id = task.id;
 
         if(task.state){
             clone.querySelector(".task_main").classList.replace("yellow", "green");
             clone.querySelector(".task_check_icon").classList.replace("d-block", "d-none");
             clone.querySelector(".task_undo_icon").classList.replace("d-none", "d-block");
+            clone.querySelector("p").classList.add("line-through");
         } else {
             clone.querySelector(".task_main").classList.replace("green", "yellow");
             clone.querySelector(".task_check_icon").classList.replace("d-none", "d-block");
@@ -85,4 +82,23 @@ const printTasks = () => {
     });
 
     taskList.appendChild(fragment);
+};
+
+const btnAction = (e) => {
+    if (e.target.classList.contains("task_check_icon")) {
+        tasks[e.target.dataset.id].state = true;
+        printTasks();
+    }
+
+    if (e.target.classList.contains("task_undo_icon")) {
+        tasks[e.target.dataset.id].state = false;
+        printTasks();
+    }
+
+    if (e.target.classList.contains("task_trush_icon")) {
+        delete tasks[e.target.dataset.id];
+        printTasks();  
+    }
+
+    e.stopPropagation();
 };

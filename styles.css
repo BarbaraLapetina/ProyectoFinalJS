@@ -106,27 +106,31 @@ body {
     gap: 20px;
 }
 
-.main_main .task_main .task_icons_group svg {
-    width: 24px;
+.main_main .task_main .task_icons_group .task_action-btn {
+    width: 60px;
     height: 24px;
-    cursor: pointer;
     transition: ease 0.27s;
+    pointer-events: all;
+    border: 1px solid var(--main-color);
+    box-shadow: none;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
-.main_main .task_main .task_icons_group svg:hover {
+.main_main .task_main .task_icons_group .task_action-btn:hover {
     opacity: 0.7;
 }
 
-.main_main .task_main .task_icons_group svg.task_check_icon path {
+.main_main .task_main .task_icons_group .task_action-btn.task_check_icon path {
     fill: var(--bg-green);
 
 }
 
-.main_main .task_main .task_icons_group svg.task_undo_icon path {
+.main_main .task_main .task_icons_group .task_action-btn.task_undo_icon path {
     fill: var(--main-color);
 }
 
-.main_main .task_main .task_icons_group svg.task_trush_icon path {
+.main_main .task_main .task_icons_group .task_action-btn.task_trush_icon path {
     fill: var(--bg-red);
 
 }
@@ -190,4 +194,8 @@ gap: 16px;
 
 .d-none {
     display: none;
+}
+
+.line-through {
+    text-decoration: line-through;
 }
